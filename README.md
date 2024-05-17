@@ -25,7 +25,7 @@ LSTM 네트워크는 긴 시퀀스 데이터를 학습하는 데 유리한 순�
 
 필요한 패키지는 다음 명령어를 통해 설치할 수 있습니다:
 
-```bash
+bash
 pip install requests pandas tqdm numpy tensorflow scikit-learn
 
 데이터 수집: 스크립트에서 데이터 수집 코드를 주석 해제하고 실행하여 로또 데이터를 수집합니다.
