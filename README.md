@@ -65,43 +65,46 @@ for num in range(2, 1120):
     else:
         print(f'Draw {num}: Data not found')
 all_lotto_numbers_df = pd.DataFrame(all_lotto_numbers)
-all_lotto_numbers_df.to_csv('lotto_numbers.csv', index=False)```
-
+all_lotto_numbers_df.to_csv('lotto_numbers.csv', index=False)
+```
 
 ## 데이터 전처리
 데이터를 로드하여 정규화하고 LSTM 입력 형태로 변환합니다:
 
-```data = pd.read_csv('lotto_numbers.csv')
+```
+data = pd.read_csv('lotto_numbers.csv')
 X = data[['num1', 'num2', 'num3', 'num4', 'num5', 'num6']].values[:-1]
 y = data[['num1', 'num2', 'num3', 'num4', 'num5', 'num6']].values[1:]
 X = X / 45.0
 y = y / 45.0
 X = X.reshape((X.shape[0], 1, X.shape[1]))
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)```
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
 
 ## 모델 학습
 전처리된 데이터를 사용하여 LSTM 모델을 구성하고 학습합니다:
-
-```model = Sequential()
+```
+model = Sequential()
 model.add(LSTM(64, input_shape=(X_train.shape[1], X_train.shape[2]), return_sequences=True))
 model.add(Dropout(0.3))
 model.add(LSTM(32, return_sequences=False))
 model.add(Dropout(0.3))
 model.add(Dense(6))
 model.compile(optimizer='adam', loss='mean_squared_error')
-model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.2, callbacks=[TqdmCallback(verbose=1)])```
+model.fit(X_train, y_train, epochs=100, batch_size=32, validation_split=0.2, callbacks=[TqdmCallback(verbose=1)])
+```
 
 ## 예측
 
 학습된 모델을 사용하여 로또 번호를 예측하고 결과를 출력합니다:
-
-```loss = model.evaluate(X_test, y_test)
+```
+loss = model.evaluate(X_test, y_test)
 print(f'Test Loss: {loss}')
 predictions = model.predict(X_test)
 predictions = predictions * 45.0
 predictions = np.round(predictions).astype(int)
-print(predictions[:5])```
-
+print(predictions[:5])
+```
 
 ## 결과
 Test Loss: 0.022802114486694336
