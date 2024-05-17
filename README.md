@@ -45,28 +45,26 @@ python lotto_analysis.py
 데이터 수집
 requests 라이브러리를 사용하여 로또 데이터를 수집하고 CSV 파일로 저장합니다:
 
-# 데이터 수집 코드 (현재 주석 처리됨)
-# 주석을 해제하여 데이터를 수집하세요
-# all_lotto_numbers = []
-# for num in range(2, 1120):
-#     url = f'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={num}'
-#     response = requests.get(url)
-#     data = response.json()
-#     if data['returnValue'] == 'success':
-#         lotto_data = {
-#             'draw': data['drwNo'],
-#             'num1': data['drwtNo1'],
-#             'num2': data['drwtNo2'],
-#             'num3': data['drwtNo3'],
-#             'num4': data['drwtNo4'],
-#             'num5': data['drwtNo5'],
-#             'num6': data['drwtNo6']
-#         }
-#         all_lotto_numbers.append(lotto_data)
-#     else:
-#         print(f'Draw {num}: Data not found')
-# all_lotto_numbers_df = pd.DataFrame(all_lotto_numbers)
-# all_lotto_numbers_df.to_csv('lotto_numbers.csv', index=False)
+all_lotto_numbers = []
+for num in range(2, 1120):
+    url = f'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={num}'
+    response = requests.get(url)
+    data = response.json()
+    if data['returnValue'] == 'success':
+        lotto_data = {
+            'draw': data['drwNo'],
+            'num1': data['drwtNo1'],
+            'num2': data['drwtNo2'],
+            'num3': data['drwtNo3'],
+            'num4': data['drwtNo4'],
+            'num5': data['drwtNo5'],
+            'num6': data['drwtNo6']
+        }
+        all_lotto_numbers.append(lotto_data)
+    else:
+        print(f'Draw {num}: Data not found')
+all_lotto_numbers_df = pd.DataFrame(all_lotto_numbers)
+all_lotto_numbers_df.to_csv('lotto_numbers.csv', index=False)
 
 
 ## 데이터 전처리
